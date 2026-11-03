@@ -1,51 +1,54 @@
-# Pakize Gurel Portfolio
+# Pakize Gurel — Developer Portfolio
 
-Personal portfolio website showcasing my front-end development, UX design and software engineering projects.
+A responsive, accessible portfolio presenting frontend, full-stack and UX work for graduate and junior software engineering opportunities.
 
-## Live Website
+**Live website:** https://gurelp35.github.io/pakize_portfolio/  
+**GitHub:** https://github.com/gurelp35  
+**LinkedIn:** https://www.linkedin.com/in/pakize-gurel-7998b52a3/
 
-https://gurelp35.github.io/pakize_portfolio/
+> **Deployment note:** The professional redesign is under review in [Pull Request #1](https://github.com/gurelp35/pakize_portfolio/pull/1). Until that PR is approved and merged, the live GitHub Pages site may show the previous design.
 
-## Projects
+## Selected projects
 
-### Healthy Bite
-Multi-page nutrition and healthy eating website designed for students and busy professionals.
+| Project | Focus | Links |
+| --- | --- | --- |
+| CareerPilot AI | Next.js, React, TypeScript; application tracking, job description analysis and interview preparation | [Live demo](https://careerpilot-ai-platform-six.vercel.app/) · [Source](https://github.com/gurelp35/careerpilot_ai_platform) |
+| Software Engineering Project | Collaborative Node.js, Express, MySQL and Docker web application | Screenshots in portfolio |
+| CalmSpace | Wellbeing web experience with breathing exercises and mood tracking | Screenshots in portfolio |
+| Healthy Bite | Responsive nutrition website | [Source](https://github.com/gurelp35/healthy-bite-web-desing) |
+| Grevio | Sustainable rewards mobile UX prototype | Screenshots in portfolio |
 
-**Technologies:** HTML, CSS, JavaScript, Responsive Design
+## Technology
 
-### CalmSpace
-Wellbeing-focused website supporting breathing exercises, mood tracking and self-reflection.
+This portfolio is a static HTML and CSS site hosted on GitHub Pages. It uses no runtime JavaScript or build dependencies. Project imagery is stored in `assets/`.
 
-**Technologies:** HTML, CSS, JavaScript, UX Design
+## Run locally
 
-### Grevio
-UX/UI prototype created in Figma for a sustainable donation and recycling rewards application.
+1. Clone the repository.
+2. Open `index.html` in a browser, or serve the folder locally:
 
-**Technologies:** Figma, UX/UI Design, User Flow
+```bash
+python3 -m http.server 8000
+```
 
-### Software Engineering Project
-Group project developed using Agile practices, Node.js, Express.js and MySQL.
+3. Visit http://localhost:8000/.
 
-**Technologies:** Node.js, Express.js, MySQL, GitHub, Docker
+## Quality checks
 
-## Technologies Used
+Run the built-in standard-library tests:
 
-- HTML5
-- CSS3
-- JavaScript
-- Node.js
-- Express.js
-- MySQL
-- GitHub
-- Docker
-- Figma
+```bash
+python3 -m unittest discover -s tests -v
+```
 
-## Author
+The tests check internal anchor targets, duplicate IDs, image files and alt text, safe external links, basic metadata, a single H1, and responsive/reduced-motion CSS rules. GitHub Actions also runs these checks on pull requests and pushes to `main`.
 
-Pakize Gurel
+**Limitations:** These are source-level integrity checks, not a substitute for browser-based responsive layout, keyboard, contrast, or screen-reader testing. Before publishing, review the site at mobile, tablet and desktop widths and verify the live demo links.
 
-LinkedIn:
-https://www.linkedin.com/in/pakize-gurel-7998b52a3
+## Deployment
 
-GitHub:
-https://github.com/gurelp35
+GitHub Pages publishes from the repository's configured deployment source. Changes in feature branches or draft pull requests do **not** update the live site. Merge only after review and approval.
+
+## Contact
+
+Email: [pakizegurel@hotmail.com](mailto:pakizegurel@hotmail.com)

@@ -72,6 +72,13 @@ class PortfolioChecks(unittest.TestCase):
         self.assertRegex(self.html, r'<meta name="description"')
         self.assertRegex(self.html, r'<meta name="viewport"')
 
+    def test_mobile_anchor_offset_accounts_for_sticky_navigation(self):
+        # The mobile navigation wraps to two rows; anchor targets must not hide behind it.
+        self.assertRegex(self.css, r"@media\s*\(max-width:\s*620px\)\s*\{[\s\S]*?scroll-padding-top:\s*135px")
+        for section_id in ("home", "about", "skills", "projects", "contact"):
+            self.assertIn("#" + section_id, self.css)
+        self.assertIn("scroll-margin-top: 135px", self.css)
+
     def test_responsive_and_reduced_motion_styles(self):
         self.assertIn("@media(max-width:620px)", self.css)
         self.assertIn("prefers-reduced-motion:reduce", self.css)

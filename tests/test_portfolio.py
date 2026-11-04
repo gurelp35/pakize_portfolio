@@ -74,7 +74,7 @@ class PortfolioChecks(unittest.TestCase):
 
     def test_mobile_anchor_offset_accounts_for_sticky_navigation(self):
         # The mobile navigation wraps to two rows; anchor targets must not hide behind it.
-        self.assertRegex(self.css, r"@media\\s*\\(max-width:\\s*620px\\)\\s*\\{[\\s\\S]*?scroll-padding-top:\\s*135px")
+        self.assertRegex(self.css, r"@media\s*\(max-width:\s*620px\)\s*\{[\s\S]*?scroll-padding-top:\s*135px")
         for section_id in ("home", "about", "skills", "projects", "contact"):
             self.assertIn("#" + section_id, self.css)
         self.assertIn("scroll-margin-top: 135px", self.css)

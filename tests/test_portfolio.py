@@ -1,7 +1,6 @@
 """Lightweight portfolio integrity checks; uses only the Python standard library."""
 from html.parser import HTMLParser
 from pathlib import Path
-import re
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -13,6 +12,7 @@ class PortfolioParser(HTMLParser):
         self.ids = []
         self.fragment_links = []
         self.local_assets = []
+        self.local_stylesheets = []
         self.unsafe_external_links = []
         self.h1_count = 0
         self.images_without_alt = []
@@ -31,6 +31,10 @@ class PortfolioParser(HTMLParser):
                 rel = set(attrs.get("rel", "").split())
                 if not {"noopener", "noreferrer"}.issubset(rel):
                     self.unsafe_external_links.append(href)
+        if tag == "link" and "stylesheet" in attrs.get("rel", "").split():
+            href = attrs.get("href", "")
+            if href and not href.startswith(("https://", "http://", "//")):
+                self.local_stylesheets.append(href)
         if tag == "img" and not attrs.get("alt"):
             self.images_without_alt.append(attrs.get("src"))
         for attr in ("src", "href"):
@@ -59,6 +63,12 @@ class PortfolioChecks(unittest.TestCase):
     def test_local_project_images_exist(self):
         self.assertTrue(self.page.local_assets)
         for path in self.page.local_assets:
+            with self.subTest(path=path):
+                self.assertTrue((ROOT / path).is_file(), path)
+
+    def test_local_stylesheets_exist(self):
+        self.assertTrue(self.page.local_stylesheets)
+        for path in self.page.local_stylesheets:
             with self.subTest(path=path):
                 self.assertTrue((ROOT / path).is_file(), path)
 

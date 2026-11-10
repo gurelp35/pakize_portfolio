@@ -16,11 +16,17 @@ class PortfolioParser(HTMLParser):
         self.unsafe_external_links = []
         self.h1_count = 0
         self.images_without_alt = []
+        self.skip_links = []
+        self.main_landmark_ids = []
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
         if "id" in attrs:
             self.ids.append(attrs["id"])
+        if tag == "main":
+            self.main_landmark_ids.append(attrs.get("id"))
+        if tag == "a" and "skip-link" in attrs.get("class", "").split():
+            self.skip_links.append(attrs.get("href"))
         if tag == "h1":
             self.h1_count += 1
         if tag == "a":
@@ -46,6 +52,12 @@ class PortfolioChecks(unittest.TestCase):
         cls.css = (ROOT / "style.css").read_text(encoding="utf-8")
         cls.page = PortfolioParser()
         cls.page.feed(cls.html)
+
+    def test_keyboard_skip_link_targets_main_landmark(self):
+        """Keyboard users must be able to bypass navigation and reach main content."""
+        self.assertEqual(self.page.main_landmark_ids, ["main"])
+        self.assertEqual(self.page.skip_links, ["#main"])
+        self.assertIn("main", self.page.ids)
 
     def test_one_main_heading(self):
         self.assertEqual(self.page.h1_count, 1)

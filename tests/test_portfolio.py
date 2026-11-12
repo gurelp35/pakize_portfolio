@@ -16,11 +16,15 @@ class PortfolioParser(HTMLParser):
         self.unsafe_external_links = []
         self.h1_count = 0
         self.images_without_alt = []
+        self.aria_id_references = []
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
         if "id" in attrs:
             self.ids.append(attrs["id"])
+        for attribute in ("aria-labelledby", "aria-describedby"):
+            if attribute in attrs:
+                self.aria_id_references.extend(attrs[attribute].split())
         if tag == "h1":
             self.h1_count += 1
         if tag == "a":
@@ -55,6 +59,11 @@ class PortfolioChecks(unittest.TestCase):
 
     def test_navigation_targets_exist(self):
         self.assertFalse(set(self.page.fragment_links) - set(self.page.ids))
+
+    def test_aria_references_point_to_existing_ids(self):
+        """Catch broken accessible names and descriptions after HTML edits."""
+        missing = set(self.page.aria_id_references) - set(self.page.ids)
+        self.assertFalse(missing, f"Missing ARIA reference targets: {sorted(missing)}")
 
     def test_local_project_images_exist(self):
         self.assertTrue(self.page.local_assets)

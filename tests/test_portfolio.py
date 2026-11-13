@@ -68,6 +68,11 @@ class PortfolioChecks(unittest.TestCase):
     def test_external_links_are_safe(self):
         self.assertFalse(self.page.unsafe_external_links)
 
+    def test_document_language_and_title(self):
+        """Provide an accessible document language and meaningful browser title."""
+        self.assertRegex(self.html, r'<html\s+lang="en"')
+        self.assertRegex(self.html, r'<title>[^<\s][^<]*</title>')
+
     def test_page_metadata(self):
         self.assertRegex(self.html, r'<meta name="description"')
         self.assertRegex(self.html, r'<meta name="viewport"')

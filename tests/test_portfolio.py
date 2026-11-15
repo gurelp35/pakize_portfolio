@@ -72,6 +72,20 @@ class PortfolioChecks(unittest.TestCase):
         self.assertRegex(self.html, r'<meta name="description"')
         self.assertRegex(self.html, r'<meta name="viewport"')
 
+    def test_small_screen_touch_targets_and_layout(self):
+        """Guard the narrow-phone and keyboard usability improvements."""
+        self.assertRegex(
+            self.css,
+            r"\.nav-links a,\.social-links a\s*\{[^}]*min-height:44px",
+        )
+        self.assertRegex(
+            self.css,
+            r"\.button,\.nav-cta\s*\{[^}]*min-height:44px",
+        )
+        self.assertIn(".project-card:focus-within", self.css)
+        self.assertIn("@media(max-width:380px)", self.css)
+        self.assertIn(".hero-actions .button{width:100%", self.css)
+
     def test_responsive_and_reduced_motion_styles(self):
         self.assertIn("@media(max-width:620px)", self.css)
         self.assertIn("prefers-reduced-motion:reduce", self.css)
